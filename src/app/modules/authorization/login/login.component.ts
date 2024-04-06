@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +9,26 @@ import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/fo
 })
 export class LoginComponent {
   public isOpen: boolean = false;
-  hide = true;
-  email = new FormControl('', [Validators.required, Validators.email]);
+  public hide = true;
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+  })
+
+  public checkForErrorsIn(): string {
+    if (this.form.hasError('required')) {
       return 'You must enter a value';
     }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.form.hasError('email') ? 'Not a valid email' : '';
   }
 
-  public openHint() {
-    this.isOpen = !this.isOpen;
+  public onSubmit(): void {
+    const { email, password } = this.form.value;
+    this.authService.login(email, password);
   }
 }

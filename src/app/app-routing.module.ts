@@ -15,9 +15,8 @@ const routes: Routes = [
   {
     path: 'board',
     loadChildren: () => import('./modules/board/board.module').then((m) => m.BoardModule),
-    // canLoad: [AuthGuard]
+    canLoad: [AuthGuard]
   }
-
 ];
 
 @NgModule({

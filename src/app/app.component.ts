@@ -8,15 +8,15 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'Noteapp';
-  public show: boolean = true;
+  public show!: boolean;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.shohHeder();
+    this.shohHeader();
   }
 
-  private shohHeder() {
+  private shohHeader() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
