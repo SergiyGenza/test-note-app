@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from 'src/app/common/services/note.service';
 
@@ -9,36 +9,41 @@ import { NoteService } from 'src/app/common/services/note.service';
   styleUrls: ['./create-note.component.scss']
 })
 export class CreateNoteComponent implements OnInit {
-  key!: string | null;
-  id!: string;
+  private key!: string | null;
+  private id!: string;
 
   constructor(
     private noteService: NoteService,
     private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
   ) { }
 
-  public notesForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    text: new FormControl('', [Validators.required]),
+  public notesForm = this.fb.group({
+    title: '',
+    text: '',
   });
 
   ngOnInit(): void {
     this.prepareDataForEdit();
   }
 
-  public checkForErrorsIn(): string {
-    if (this.notesForm.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return this.notesForm.hasError('email') ? 'Not a valid email' : '';
+  public getControlName(name: string): FormControl<any> {
+    const control = this.notesForm.get(name) as FormControl;
+    control.addValidators([Validators.required]);
+    return control;
   }
+
 
   public onSubmit(): void {
     const { title, text } = this.notesForm.value;
-    if ((title && text)) {
-      this.key
-        ? this.noteService.editNote(this.id, title, text)
-        : this.noteService.createNote(title, text);
+    if (title && text) {
+      if (this.id) {
+        this.noteService.editNote(this.id, title, text);
+      }
+      else {
+        this.clearForm();
+        this.noteService.createNote(title, text);
+      }
     }
   }
 
@@ -51,6 +56,14 @@ export class CreateNoteComponent implements OnInit {
         title: note.title,
         text: note.text
       });
+    }
+  }
+
+  private clearForm(): void {
+    this.notesForm.reset();
+    for (const key in this.notesForm.controls) {
+      this.notesForm.get(key)?.clearValidators();
+      this.notesForm.get(key)?.updateValueAndValidity();
     }
   }
 }
