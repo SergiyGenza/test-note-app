@@ -33,6 +33,10 @@ export class BoardComponent implements OnInit {
     return this.notesForm.hasError('email') ? 'Not a valid email' : '';
   }
 
+  editNote(id: string) {
+    this.router.navigate([`board/edit/:${id}`])
+  }
+
   deleteNote(id: string) {
     this.noteService.deleteNote(id);
   }

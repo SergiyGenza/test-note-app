@@ -36,7 +36,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>edit</button>
+          <button mat-button (click)="editNote(note.id)">edit</button>
           <button mat-button (click)="deleteNote(note.id)">delete</button>
         </mat-card-actions>
       </mat-card>
@@ -44,24 +44,5 @@
     <ng-template #empty>
       You don't have notes
     </ng-template>
-  </div>
-
-  <div class="" *ngSwitchCase="'/board/edit'">
-    <div class="container">
-      <h2>Create Note</h2>
-      <form action="" [formGroup]="notesForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Enter title</mat-label>
-          <input matInput placeholder="" formControlName="title" required>
-          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter text</mat-label>
-          <textarea matInput placeholder="some cool story" formControlName="text" required></textarea>
-          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
-        </mat-form-field>
-        <button type="submit" mat-raised-button color="primary">Save Note</button>
-      </form>
-    </div>
   </div>
 </container-element>
