@@ -2,20 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardComponent } from './board/board.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TestComponent } from './test/test.component';
 import { BoardRoutingModule } from './board.routing.module';
+import { CardsListComponent } from './cards-list/cards-list.component';
+import { CreateNoteComponent } from './create-note/create-note.component';
 
 
 
 @NgModule({
   declarations: [
     BoardComponent,
-    TestComponent
+    CardsListComponent,
+    CreateNoteComponent
   ],
   imports: [
     CommonModule,
+    SharedModule,
     BoardRoutingModule,
-    SharedModule
   ]
 })
 export class BoardModule { }

@@ -1,0 +1,10 @@
+<div class="container" *ngIf="notesList$ | async; let notesList">
+  <ng-container *ngIf="notesList.length > 0; else empty">
+    <app-card *ngFor="let note of notesList" [note]="note" (editEvent)="editNote($event)"
+      (deleteEvent)="deleteNote($event)">
+    </app-card>
+  </ng-container>
+  <ng-template #empty>
+    You don't have notes
+  </ng-template>
+</div>

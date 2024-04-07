@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BoardComponent } from './board/board.component';
-import { TestComponent } from './test/test.component';
+import { CardsListComponent } from './cards-list/cards-list.component';
+import { CreateNoteComponent } from './create-note/create-note.component';
 
 
 
@@ -11,20 +12,16 @@ const routes: Routes = [
     component: BoardComponent,
   },
   {
-    path: 'form',
-    component: BoardComponent,
+    path: 'add',
+    component: CreateNoteComponent,
   },
   {
     path: 'list',
-    component: BoardComponent,
-  },
-  {
-    path: 'edit',
-    component: TestComponent,
+    component: CardsListComponent,
   },
   {
     path: 'edit/:key',
-    component: TestComponent,
+    component: CreateNoteComponent,
   },
 ];
 
