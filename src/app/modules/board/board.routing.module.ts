@@ -9,6 +9,18 @@ const routes: Routes = [
     path: '',
     component: BoardComponent,
   },
+  {
+    path: 'form',
+    component: BoardComponent,
+  },
+  {
+    path: 'list',
+    component: BoardComponent,
+  },
+  {
+    path: 'edit',
+    component: BoardComponent,
+  },
 ];
 
 @NgModule({

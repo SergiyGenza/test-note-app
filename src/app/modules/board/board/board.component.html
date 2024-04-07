@@ -1,4 +1,67 @@
-<div class="wrapper-board">
-  <button mat-raised-button color="primary">Add new</button>
-  <button mat-raised-button color="accent">Open Notes List</button>
-</div>
+<container-element [ngSwitch]="url">
+  <div *ngSwitchCase="'/board'" class="wrapper-board">
+    <button mat-raised-button color="primary" routerLink="form">Add new</button>
+    {{url}}
+    <button mat-raised-button color="accent" routerLink="list">Open Notes List</button>
+  </div>
+
+  <div class="wrapper" *ngSwitchCase="'/board/form'">
+    <div class="container">
+      <h2>Create Note</h2>
+      <form action="" [formGroup]="notesForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter title</mat-label>
+          <input matInput placeholder="" formControlName="title" required>
+          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter text</mat-label>
+          <textarea matInput placeholder="some cool story" formControlName="text" required></textarea>
+          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary">Save Note</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="" *ngSwitchCase="'/board/list'">
+    <ng-container *ngIf="notesList.length > 0; else empty">
+      <mat-card class="example-card" *ngFor="let note of notesList">
+        <mat-card-header>
+          <mat-card-title>{{note.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{note.text}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>edit</button>
+          <button mat-button (click)="deleteNote(note.id)">delete</button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+    <ng-template #empty>
+      You don't have notes
+    </ng-template>
+  </div>
+
+  <div class="" *ngSwitchCase="'/board/edit'">
+    <div class="container">
+      <h2>Create Note</h2>
+      <form action="" [formGroup]="notesForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter title</mat-label>
+          <input matInput placeholder="" formControlName="title" required>
+          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter text</mat-label>
+          <textarea matInput placeholder="some cool story" formControlName="text" required></textarea>
+          <mat-error *ngIf="notesForm.invalid">{{checkForErrorsIn()}}</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary">Save Note</button>
+      </form>
+    </div>
+  </div>
+</container-element>
