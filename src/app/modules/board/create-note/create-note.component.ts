@@ -27,9 +27,11 @@ export class CreateNoteComponent implements OnInit {
     this.prepareDataForEdit();
   }
 
-  public getControlName(name: string): FormControl<any> {
+  public getControlName(name: string): FormControl<string> {
     const control = this.notesForm.get(name) as FormControl;
-    control.addValidators([Validators.required]);
+    name === 'text'
+      ? control.addValidators([Validators.required, Validators.minLength(6)])
+      : control.addValidators([Validators.required]);
     return control;
   }
 

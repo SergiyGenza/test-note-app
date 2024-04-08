@@ -11,11 +11,12 @@ export class InputComponent {
   @Input() label!: string;
   @Input() type?: 'text' | 'password' | 'email';
   @Input() control: FormControl = new FormControl;
-  public hide = true;
 
   public checkForErrorsIn(): string {
     if (this.control.hasError('required')) {
       return 'You must enter a value';
+    } else if (this.control.hasError('minlength')) {
+      return 'Enter at least 6 characters'
     }
     return this.control.hasError('email') ? 'Not a valid email' : '';
   }

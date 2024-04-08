@@ -8,8 +8,7 @@ import { AuthService } from 'src/app/common/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  public isOpen!: boolean;
-  public hide = true;
+  public isOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -21,7 +20,7 @@ export class LoginComponent {
     password: '',
   })
 
-  public getControlName(name: string): FormControl<any> {
+  public getControlName(name: string): FormControl<string> {
     const control = this.loginForm.get(name) as FormControl;
     name === 'email'
       ? control.addValidators([Validators.required, Validators.email])

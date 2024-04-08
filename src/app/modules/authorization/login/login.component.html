@@ -15,7 +15,7 @@
       <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Continue</button>
     </form>
     <span class="alternative-action">or use</span>
-    <button type="button" class="btn__hint" mat-raised-button (click)="isOpen = !isOpen" >Hint</button>
+    <button type="button" class="btn__hint" mat-raised-button (click)="isOpen = !isOpen">Hint</button>
     <div *ngIf="isOpen" class="hint">
       <p>user@gmail.com</p>
       <p>password</p>
