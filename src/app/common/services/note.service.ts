@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Note } from '../models/note.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from './snackBar.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class NoteService {
   private notesArray: Note[];
 
   constructor(
-    private _snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
   ) {
     this.notesArray = this.getAllNotes();
   }
@@ -38,14 +39,14 @@ export class NoteService {
         text: text,
       }
       this.updateNotes();
-      this.openSnackBar('Note edited!', 'Ok');
+      this.snackBarService.openSnackBar('Note edited!', 'Ok');
     }
   }
 
   public deleteNote(id: string): void {
     this.notesArray = this.notesArray.filter(note => note.id !== id);
     this.updateNotes();
-    this.openSnackBar('Note removed!', 'Ok');
+    this.snackBarService.openSnackBar('Note removed!');
   }
 
   public getNoteById(id: string): Note {
@@ -61,7 +62,7 @@ export class NoteService {
   private updateNotes(): void {
     localStorage.setItem('notes', JSON.stringify(this.notesArray));
     this.notesSubject.next(this.notesArray);
-    this.openSnackBar('Note updated!', 'Ok');
+    this.snackBarService.openSnackBar('Note updated!', 'Ok');
   }
 
   private uniqueId(): string {
@@ -70,9 +71,5 @@ export class NoteService {
     return dateString + random;
   };
 
-  private openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
+
 }

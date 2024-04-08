@@ -11,6 +11,6 @@ export class HeaderComponent {
   constructor(private authService: AuthService) { }
 
   public logout() {
-    this.authService.logout()
+    this.authService.logout();
   }
 }

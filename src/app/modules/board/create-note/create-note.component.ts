@@ -19,22 +19,13 @@ export class CreateNoteComponent implements OnInit {
   ) { }
 
   public notesForm = this.fb.group({
-    title: '',
-    text: '',
+    title: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    text: new FormControl('', [Validators.required]),
   });
 
   ngOnInit(): void {
     this.prepareDataForEdit();
   }
-
-  public getControlName(name: string): FormControl<string> {
-    const control = this.notesForm.get(name) as FormControl;
-    name === 'text'
-      ? control.addValidators([Validators.required, Validators.minLength(6)])
-      : control.addValidators([Validators.required]);
-    return control;
-  }
-
 
   public onSubmit(): void {
     const { title, text } = this.notesForm.value;

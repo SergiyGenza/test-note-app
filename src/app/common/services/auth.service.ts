@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar'; 
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SnackBarService } from './snackBar.service';
 
 const user = {
   email: 'user@gmail.com',
@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
   ) {
     const userFromLocalStorage = localStorage.getItem('note app user');
     this.userSubject = new BehaviorSubject<boolean>(!!userFromLocalStorage);
@@ -24,12 +24,12 @@ export class AuthService {
 
   public login(email: string, password: string): void {
     if (email === user.email && password === user.password) {
-      this.openSnackBar('Successful login', 'Ok')
+      this.snackBarService.openSnackBar('Successful login', 'Ok')
       this.userSubject.next(true);
       this.router.navigate(['board']);
       localStorage.setItem('note app user', JSON.stringify(email));
     } else {
-      this.openSnackBar('Invalid data', 'Ok')
+      this.snackBarService.openSnackBar('Invalid data', 'Ok')
     }
   }
 
@@ -39,14 +39,7 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  public isAuthorized(): boolean {
-    return this.userSubject.getValue();
+  public isAuthorized(): Observable<boolean> {
+    return this.userSubject.asObservable();
   }
-
-  private openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
 }

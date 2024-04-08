@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/common/services/auth.service';
 
@@ -16,18 +16,10 @@ export class LoginComponent {
   ) { }
 
   public loginForm = this.fb.group({
-    email: '',
-    password: '',
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   })
-
-  public getControlName(name: string): FormControl<string> {
-    const control = this.loginForm.get(name) as FormControl;
-    name === 'email'
-      ? control.addValidators([Validators.required, Validators.email])
-      : control.addValidators([Validators.required,]);
-    return control;
-  }
-
+  
   public onSubmit(): void {
     const { email, password } = this.loginForm.value;
     if (email && password) {

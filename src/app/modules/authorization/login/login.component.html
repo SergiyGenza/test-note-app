@@ -5,14 +5,16 @@
       <app-input 
         [label]="'Enter your email'"
         [type]="'email'"
-        [control]="getControlName('email')">
+        [control]="loginForm.controls.email"
+        >
       </app-input>
       <app-input 
         [label]="'Enter your passsword'"
         [type]="'password'"
-        [control]="getControlName('password')">
+        [control]="loginForm.controls.password"
+        >
       </app-input>
-      <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Continue</button>
+      <button type="submit" mat-raised-button color="primary" disabled="{{!loginForm.valid}}">Continue</button>
     </form>
     <span class="alternative-action">or use</span>
     <button type="button" class="btn__hint" mat-raised-button (click)="isOpen = !isOpen">Hint</button>

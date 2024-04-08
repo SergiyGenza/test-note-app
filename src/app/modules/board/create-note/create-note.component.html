@@ -5,12 +5,12 @@
       <app-input
         [label]="'Enter the title'"
         [type]="'text'"
-        [control]="getControlName('title')">
+        [control]="notesForm.controls.title">
       </app-input>
       <app-input
         [label]="'Tell your story'"
         [type]="'text'"
-        [control]="getControlName('text')">
+        [control]="notesForm.controls.text">
       </app-input>
       <button type="submit" mat-raised-button color="primary" [disabled]="!notesForm.valid">Save Note</button>
     </form>
